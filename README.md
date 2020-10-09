@@ -1,7 +1,7 @@
 # hfsm
 A simple flexible Hierarchical Finite State Machine in C#.
 
-![hfsm](https://https://github.com/olafvisker/hfsm/img/hfsm.png "HFSM Diagram")
+<img src="https://github.com/olafvisker/hfsm/blob/main/img/hfsm.png" alt="HFSM Diagram" width="50%">
 
 ## documentation
 States can be created either by instantiating a state directly and providing ```onEnter```, ```onTick``` and ```onExit``` functions, or by inhereting from ```State``` and overriding its ```Start```, ```Update```, ```End``` and ```Finished``` methods. States can also consist solely of other states effectively grouping them.
