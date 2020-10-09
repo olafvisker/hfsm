@@ -17,26 +17,26 @@ public class TimerState : State
     public override void Start() { timer = 0; }
     public override void Update() { timer += Time.deltaTime; }
     public override void End() { }
-    public override bool Finished() { return timer >= time;} // Condition trigger
+    public override bool Finished() { return timer >= time;}        // Condition trigger
 }
 
 public class Program() 
 {
     private static void Main(string[] args)
     {
-        Fsm fsm = new Fsm(); // Create new Hierarchical FSM machine
+        HFSM hfsm = new HFSM();                                     // Create new Hierarchical FSM machine
         
-        State move = new State(Move);                           // Only contains onTick method
+        State move = new State(Move);                               // Only contains onTick method
         State findRndWaypoint = new State(SetRandomWaypoint);
-        State wait = new TimerState(10);                        // State by inheritance
+        State wait = new TimerState(10);                            // State by inheritance
         State flee = new State(PrepareFleeing, Flee, EndFleeing);
-        State idle = new State(findRndWaypoint, move, wait);    // State consisting of other states
+        State idle = new State(findRndWaypoint, move, wait);        // State consisting of other states
         
-        fsm.AddTransition(findRndWaypoint, move);               // Transition defined through fsm without a condition (automatically triggered)
-        move.AddTransition(wait, reachedLocation);              // Transition directly defined with reachedLocation condition
-        fsm.AddTransition(wait, findRndWaypoint);               // Condition implemented by overriding Finished() method
-        fsm.AddTransition(idle, flee, dangerClose);             // Transition from group state idle to flee state
-        fsm.AddTransition(flee, idle, ()=>!dangerClose());      // Transition from flee state to idle group state
+        hfsm.AddTransition(findRndWaypoint, move);                  // Transition defined through fsm without a condition (automatically triggered)
+        move.AddTransition(wait, reachedLocation);                  // Transition directly defined with reachedLocation condition
+        hfsm.AddTransition(wait, findRndWaypoint);                  // Condition implemented by overriding Finished() method
+        hfsm.AddTransition(idle, flee, dangerClose);                // Transition from group state idle to flee state
+        hfsm.AddTransition(flee, idle, ()=>!dangerClose());         // Transition from flee state to idle group state
     }
 }
 ```
