@@ -24,8 +24,8 @@ public class State
             child.AddParent(this);
     }
 
-    public void AddTransition(State to) { transitions.Add(new Tuple<State, Func<bool>>(to, Finished)); }
-    public void AddTransition(State to, Func<bool> condition) { transitions.Add(new Tuple<State, Func<bool>>(to, condition)); }
+    public State To(State to) { transitions.Add(new Tuple<State, Func<bool>>(to, Finished)); return to; }
+    public State To(State to, Func<bool> condition) { transitions.Add(new Tuple<State, Func<bool>>(to, condition)); return to; }
     public void AddParent(State parent) { parents.Add(parent); }
     public void SetEntryState(State state) { entryState = state; }
 
@@ -66,8 +66,8 @@ public class HFSM
     private State currentState;
 
     public void SetState(State state) { currentState = state; }
-    public void AddTransition(State from, State to) { from.AddTransition(to); }
-    public void AddTransition(State from, State to, Func<bool> condition) { from.AddTransition(to, condition); }
+    public State To(State from, State to) { from.To(to); return to; }
+    public State To(State from, State to, Func<bool> condition) { from.To(to, condition); return to; }
 
     public void Tick()
     {

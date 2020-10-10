@@ -32,12 +32,22 @@ public class Program()
         State flee = new State(PrepareFleeing, Flee, EndFleeing);
         State idle = new State(findRndWaypoint, move, wait);        // State consisting of other states
         
-        hfsm.AddTransition(findRndWaypoint, move);                  // Transition defined through fsm without a condition (automatically triggered)
-        move.AddTransition(wait, reachedLocation);                  // Transition directly defined with reachedLocation condition
-        hfsm.AddTransition(wait, findRndWaypoint);                  // Condition implemented by overriding Finished() method
-        hfsm.AddTransition(idle, flee, dangerClose);                // Transition from group state idle to flee state
-        hfsm.AddTransition(flee, idle, ()=>!dangerClose());         // Transition from flee state to idle group state
+        hfsm.To(findRndWaypoint, move);                             // Transition defined through fsm without a condition (automatically triggered)
+        move.To(wait, reachedLocation);                             // Transition directly defined with reachedLocation condition
+        hfsm.To(wait, findRndWaypoint);                             // Condition implemented by overriding Finished() method
+        hfsm.To(idle, flee, dangerClose);                           // Transition from group state idle to flee state
+        hfsm.To(flee, idle, ()=>!dangerClose());                    // Transition from flee state to idle group state
     }
 }
+```
+The ```To``` function returns the to be transitioned to state, this means that transitions can also be defined using chaining. 
+
+```C#
+findRndWaypoint
+    .To(move)
+    .To(wait, reachedLocation)
+    .To(findRndWaypoint);
+
+hfsm.To(idle, flee, dangerClose).To(idle, ()=>!dangerClose()); 
 ```
 **enjoy!**
