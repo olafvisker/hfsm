@@ -24,7 +24,7 @@ public class Program()
 {
     private static void Main(string[] args)
     {
-        HFSM hfsm = new HFSM();                                     // Create new Hierarchical FSM machine
+        HFSM hfsm = new HFSM();                                     // Create new Hierarchical FSM
         
         State move = new State(Move);                               // Only contains onTick method
         State findRndWaypoint = new State(SetRandomWaypoint);
