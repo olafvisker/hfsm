@@ -31,9 +31,9 @@ public class State
 
     public State GetFinalEntryState()
     {
-        State entry = entryState;
-        while (entry != null && entry.entryState != null) { entry = entryState; }
-        return entry;
+        if (entryState == null || entryState.entryState == null)
+            return entryState;
+        return entryState.GetFinalEntryState();
     }
 
     public State GetTransitionState()
