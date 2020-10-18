@@ -89,7 +89,7 @@ public class HFSM
     public void Tick()
     {
         State entry = currentState.GetFinalEntryState();
-        if (entry != null) currentState = entry;
+        if (entry != null) SetState(entry);
         currentState.Tick();
         State to = currentState.GetTransitionState();
         if (to != null) SetState(to);
