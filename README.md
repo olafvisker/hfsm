@@ -17,7 +17,7 @@ public class TimerState : State
     public override void Start() { timer = 0; }
     public override void Update() { timer += Time.deltaTime; }
     public override void End() { }
-    public override bool Finished() { return timer >= time;}        // Condition trigger
+    public bool Finished() { return timer >= time;}       
 }
 
 public class Program() 
@@ -34,7 +34,7 @@ public class Program()
         
         hfsm.To(findRndWaypoint, move);                             // Transition defined through fsm without a condition (automatically triggered)
         move.To(wait, reachedLocation);                             // Transition directly defined with reachedLocation condition
-        hfsm.To(wait, findRndWaypoint);                             // Condition implemented by overriding Finished() method
+        hfsm.To(wait, findRndWaypoint, wait.Finished);              // Condition implemented by overriding Finished() method
         hfsm.To(idle, flee, dangerClose);                           // Transition from group state idle to flee state
         hfsm.To(flee, idle, ()=>!dangerClose());                    // Transition from flee state to idle group state
     }
