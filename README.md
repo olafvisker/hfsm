@@ -14,9 +14,9 @@ public class TimerState : State
     float time = 0;
     float timer = 0;
     public TimerState(float time) { this.time = time; }
-    public override void Start() { timer = 0; }
-    public override void Update() { timer += Time.deltaTime; }
-    public override void End() { }
+    protected override void Start() { timer = 0; }
+    protected override void Update() { timer += Time.deltaTime; }
+    protected override void End() { }
     public bool Finished() { return timer >= time;}       
 }
 
