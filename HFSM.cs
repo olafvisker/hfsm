@@ -32,7 +32,7 @@ public class State
     public void AddParent(State parent) { parents.Add(parent); }
     public void SetEntryState(State state) { entryState = state; }
 
-    public State To(State to) { return To(to, () => true); }
+    public State To(State to) { return To(to, Finished); }
     public State To(State to, params Func<bool>[] conditions) { transitions.Add(new Tuple<State, List<Func<bool>>>(to, new List<Func<bool>>(conditions))); return to; }
 
     public State GetFinalEntryState()
@@ -67,6 +67,7 @@ public class State
     protected virtual void Start() { }
     protected virtual void Update() { }
     protected virtual void End() { }
+    protected virtual bool Finished() { return true; }
 }
 
 public class HFSM
